@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 10:23:07 by amarzana          #+#    #+#             */
-/*   Updated: 2022/05/19 12:18:53 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:59:54 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_read(int fd, char *save)
 	char	*buf;
 	ssize_t	len;
 
-	buf = malloc(BUFFER_SIZE + 1);
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (NULL);
 	len = 1;
@@ -61,7 +61,7 @@ char	*ft_get_line(char *save)
 		return (NULL);
 	while (save[i] && save[i] != '\n')
 		i++;
-	str = malloc(i + 2);
+	str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -93,7 +93,7 @@ char	*ft_cut_save(char *save)
 		free(save);
 		return (NULL);
 	}
-	str = malloc(ft_strlen(save) - i + 1);
+	str = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1));
 	if (!str)
 		return (NULL);
 	i++;

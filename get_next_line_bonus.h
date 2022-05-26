@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:45:26 by amarzana          #+#    #+#             */
-/*   Updated: 2022/05/19 11:45:43 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:08:13 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <limits.h>
 
 char	*get_next_line(int fd);
 char	*ft_read(int fd, char *save);

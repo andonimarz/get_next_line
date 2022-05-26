@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:18:58 by amarzana          #+#    #+#             */
-/*   Updated: 2022/05/19 11:46:18 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:03:04 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	*ft_strchr(char *str, int c)
 	if (!str)
 		return (NULL);
 	if (c == '\0')
-		return ((char *)&str[i]);
+		return (&str[i]);
 	while (str[i])
 	{
-		if (str[i] == (char) c)
-			return ((char *)&str[i]);
+		if (str[i] == c)
+			return (&str[i]);
 		i++;
 	}
 	return (NULL);
@@ -51,17 +51,14 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1 = (char *)malloc(1 * sizeof(char));
 		s1[0] = '\0';
 	}
-	if (!s1 || !s2)
-		return (NULL);
-	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (str == NULL)
+	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!s1 || !s2 || !str)
 		return (NULL);
 	i = -1;
 	n = 0;
-	if (s1)
-		while (s1[++i] != '\0')
-			str[i] = s1[i];
-	while (s2[n] != '\0')
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[n])
 		str[i++] = s2[n++];
 	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
 	free(s1);

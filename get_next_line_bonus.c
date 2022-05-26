@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:45:04 by amarzana          #+#    #+#             */
-/*   Updated: 2022/05/19 12:19:24 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:01:39 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 char	*get_next_line(int fd)
 {
-	static char		*save[4094];
+	static char		*save[OPEN_MAX];
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 4093)
-		return (0);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	save[fd] = ft_read(fd, save[fd]);
 	if (!save[fd])
 		return (NULL);
@@ -32,11 +32,11 @@ char	*ft_read(int fd, char *save)
 	char	*buf;
 	ssize_t	len;
 
-	buf = malloc(BUFFER_SIZE + 1);
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (NULL);
 	len = 1;
-	while (len != 0 && (!ft_strchr(save, '\n')))
+	while (len > 0)
 	{
 		len = read(fd, buf, BUFFER_SIZE);
 		if (len == -1)
@@ -46,6 +46,8 @@ char	*ft_read(int fd, char *save)
 		}
 		buf[len] = '\0';
 		save = ft_strjoin(save, buf);
+		if (ft_strchr(buf, '\n'))
+			break ;
 	}
 	free(buf);
 	return (save);
@@ -61,15 +63,12 @@ char	*ft_get_line(char *save)
 		return (NULL);
 	while (save[i] && save[i] != '\n')
 		i++;
-	str = malloc(i + 2);
+	str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
-	i = 0;
-	while (save[i] && save[i] != '\n')
-	{
+	i = -1;
+	while (save[++i] && save[i] != '\n')
 		str[i] = save[i];
-		i++;
-	}
 	if (save[i] == '\n')
 	{
 		str[i] = save[i];
@@ -93,7 +92,7 @@ char	*ft_cut_save(char *save)
 		free(save);
 		return (NULL);
 	}
-	str = malloc(ft_strlen(save) - i + 1);
+	str = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1));
 	if (!str)
 		return (NULL);
 	i++;
